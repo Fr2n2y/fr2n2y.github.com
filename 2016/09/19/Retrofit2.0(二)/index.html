@@ -1,0 +1,616 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,Retrofit2,Rxjava," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Retrofit2+RxJava1.定义接口Observable1234interface city &amp;#123;    @GET(&quot;openapi/cities&quot;)    Observable&amp;lt;City&amp;gt; getCitiesBean();&amp;#125;
+2.SubscriberFunc1 和 Action 的区别在于， Func1 包装的是有返回值的方法。另外，和 ActionX 一样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retrofit2.0（二）">
+<meta property="og:url" content="http://yoursite.com/2016/09/19/Retrofit2.0(二)/index.html">
+<meta property="og:site_name" content="Franzy's blog">
+<meta property="og:description" content="Retrofit2+RxJava1.定义接口Observable1234interface city &amp;#123;    @GET(&quot;openapi/cities&quot;)    Observable&amp;lt;City&amp;gt; getCitiesBean();&amp;#125;
+2.SubscriberFunc1 和 Action 的区别在于， Func1 包装的是有返回值的方法。另外，和 ActionX 一样">
+<meta property="og:updated_time" content="2016-09-19T16:00:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Retrofit2.0（二）">
+<meta name="twitter:description" content="Retrofit2+RxJava1.定义接口Observable1234interface city &amp;#123;    @GET(&quot;openapi/cities&quot;)    Observable&amp;lt;City&amp;gt; getCitiesBean();&amp;#125;
+2.SubscriberFunc1 和 Action 的区别在于， Func1 包装的是有返回值的方法。另外，和 ActionX 一样">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/19/Retrofit2.0(二)/"/>
+
+  <title> Retrofit2.0（二） | Franzy's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Franzy's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Android</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-jianli">
+          <a href="/jianli" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Retrofit2.0（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-19T23:55:22+08:00" content="2016-09-19">
+              2016-09-19
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Retrofit2-RxJava"><a href="#Retrofit2-RxJava" class="headerlink" title="Retrofit2+RxJava"></a>Retrofit2+RxJava</h1><h3 id="1-定义接口"><a href="#1-定义接口" class="headerlink" title="1.定义接口"></a>1.定义接口</h3><h5 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">city</span> </span>&#123;</div><div class="line">    <span class="meta">@GET</span>(<span class="string">"openapi/cities"</span>)</div><div class="line">    <span class="function">Observable&lt;City&gt; <span class="title">getCitiesBean</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-Subscriber"><a href="#2-Subscriber" class="headerlink" title="2.Subscriber"></a>2.Subscriber</h3><h5 id="Func1-和-Action-的区别在于，-Func1-包装的是有返回值的方法。另外，和-ActionX-一样，-FuncX-也有多个，用于不同参数个数的方法。FuncX-和-ActionX-的区别在-FuncX-包装的是有返回值的方法。"><a href="#Func1-和-Action-的区别在于，-Func1-包装的是有返回值的方法。另外，和-ActionX-一样，-FuncX-也有多个，用于不同参数个数的方法。FuncX-和-ActionX-的区别在-FuncX-包装的是有返回值的方法。" class="headerlink" title="Func1 和 Action 的区别在于， Func1 包装的是有返回值的方法。另外，和 ActionX 一样， FuncX 也有多个，用于不同参数个数的方法。FuncX 和 ActionX 的区别在 FuncX 包装的是有返回值的方法。"></a>Func1 和 Action 的区别在于， Func1 包装的是有返回值的方法。另外，和 ActionX 一样， FuncX 也有多个，用于不同参数个数的方法。FuncX 和 ActionX 的区别在 FuncX 包装的是有返回值的方法。</h5><a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">city.getCitiesBean()</div><div class="line">            .subscribeOn(Schedulers.io())<span class="comment">//指定网络加载等操作在I/0线程</span></div><div class="line">            .observeOn(AndroidSchedulers.mainThread())<span class="comment">//更新页面在主线程，符合业务逻辑</span></div><div class="line">            .map(<span class="keyword">new</span> Func1&lt;City, List&lt;City.CitiesBean&gt;&gt;() &#123;</div><div class="line"></div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="keyword">public</span> List&lt;City.CitiesBean&gt; call(City city) &#123;</div><div class="line">                    <span class="keyword">return</span> city.getCities();</div><div class="line">                &#125;</div><div class="line">            &#125;)<span class="comment">//Func1是一个带返回值的包装，map是对Observable进行转换</span></div><div class="line">            .flatMap(<span class="keyword">new</span> Func1&lt;List&lt;City.CitiesBean&gt;, Observable&lt;String&gt;&gt;() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> Observable&lt;String&gt; <span class="title">call</span><span class="params">(List&lt;City.CitiesBean&gt; citiesBeen)</span> </span>&#123;</div><div class="line">                    <span class="keyword">return</span> Observable.just(citiesBeen.get(<span class="number">1</span>).getCity_name());</div><div class="line">                &#125;<span class="comment">//subscribe是订阅，其中Action1是一个封装了OnNext的</span></div><div class="line">            &#125;).subscribe(<span class="keyword">new</span> Action1&lt;String&gt;() &#123;</div><div class="line">  <span class="comment">//flatMap也是一种转换，是对多个对象进行转换，返回的必须是一个Observable，然后再进行订阅，接受到的新的</span></div><div class="line">  <span class="comment">//订阅再进行subscribe订阅，然后操作的是这个新的Observable。相当于A-&gt;C变成A-&gt;B,B-&gt;C这样铺平。也就是</span></div><div class="line">  <span class="comment">//flat的含义。</span></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">            Log.v(<span class="string">"aaaaaaaaa"</span>,s);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<h5 id="标准应该是subscribe-new-Observer-这样可以得到completed也就是发送完毕的，OnNext执行的操作，以及ERROR报错。Action1是带一个参数，OnNext-的包装。"><a href="#标准应该是subscribe-new-Observer-这样可以得到completed也就是发送完毕的，OnNext执行的操作，以及ERROR报错。Action1是带一个参数，OnNext-的包装。" class="headerlink" title="标准应该是subscribe,(new Observer)这样可以得到completed也就是发送完毕的，OnNext执行的操作，以及ERROR报错。Action1是带一个参数，OnNext()的包装。"></a>标准应该是subscribe,(new Observer)这样可以得到completed也就是发送完毕的，OnNext执行的操作，以及ERROR报错。Action1是带一个参数，OnNext()的包装。</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Observer&lt;String&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(String s)</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-取消订阅，Subscriber-unsubcribe"><a href="#3-取消订阅，Subscriber-unsubcribe" class="headerlink" title="3.取消订阅，Subscriber.unsubcribe();"></a>3.取消订阅，Subscriber.unsubcribe();</h3>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+            <a href="/tags/Retrofit2/" rel="tag">#Retrofit2</a>
+          
+            <a href="/tags/Rxjava/" rel="tag">#Rxjava</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/19/Retrofit2.0(一)/" rel="next" title="Retrofit2.0（一）">
+                <i class="fa fa-chevron-left"></i> Retrofit2.0（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/15/categories/" rel="prev" title="分类">
+                分类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/panda.png"
+               alt="Franzy" />
+          <p class="site-author-name" itemprop="name">Franzy</p>
+          <p class="site-description motion-element" itemprop="description">开源项目及笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Fr2n2y" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3871128168/profile?topnav=1&wvr=6&is_all=1" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Retrofit2-RxJava"><span class="nav-number">1.</span> <span class="nav-text">Retrofit2+RxJava</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-定义接口"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.定义接口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Observable"><span class="nav-number">1.0.1.0.1.</span> <span class="nav-text">Observable</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Subscriber"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.Subscriber</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Func1-和-Action-的区别在于，-Func1-包装的是有返回值的方法。另外，和-ActionX-一样，-FuncX-也有多个，用于不同参数个数的方法。FuncX-和-ActionX-的区别在-FuncX-包装的是有返回值的方法。"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">Func1 和 Action 的区别在于， Func1 包装的是有返回值的方法。另外，和 ActionX 一样， FuncX 也有多个，用于不同参数个数的方法。FuncX 和 ActionX 的区别在 FuncX 包装的是有返回值的方法。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#标准应该是subscribe-new-Observer-这样可以得到completed也就是发送完毕的，OnNext执行的操作，以及ERROR报错。Action1是带一个参数，OnNext-的包装。"><span class="nav-number">1.0.2.0.2.</span> <span class="nav-text">标准应该是subscribe,(new Observer)这样可以得到completed也就是发送完毕的，OnNext执行的操作，以及ERROR报错。Action1是带一个参数，OnNext()的包装。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-取消订阅，Subscriber-unsubcribe"><span class="nav-number">1.0.3.</span> <span class="nav-text">3.取消订阅，Subscriber.unsubcribe();</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Franzy</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
